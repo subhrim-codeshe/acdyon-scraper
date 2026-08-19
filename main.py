@@ -6,6 +6,16 @@ from datetime import datetime
 app = FastAPI()
 last_pull = {"time": None, "count": 0, "status": "never run"}
 
+@app.get("/")
+def root():
+    return {
+        "message": "Job listing ingestion API — Acdyon Technologies assessment",
+        "endpoints": {
+            "/jobs": "Pulls latest job listings from RemoteOK",
+            "/status": "Shows last pull time, count, and status"
+        }
+    }
+
 def fetch_jobs():
     headers = {"User-Agent": "Mozilla/5.0 (compatible; JobBot/1.0)"}
     resp = httpx.get("https://remoteok.com/api", headers=headers, timeout=10)
